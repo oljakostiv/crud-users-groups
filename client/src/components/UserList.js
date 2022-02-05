@@ -16,7 +16,7 @@ const UserList = observer(() => {
             setUserId(id);
 
         }
-
+console.log(store.users);
         return (
             <Row>
                 {

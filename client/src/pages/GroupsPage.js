@@ -17,7 +17,7 @@ const GroupsPage = observer(() => {
             store.setGroups(true);
             store.setGroups(data);
         }).finally(() => setLoading(false));
-    });
+    }, []);
 
     if (loading) {
         return <Spinner animation={"grow"}/>
