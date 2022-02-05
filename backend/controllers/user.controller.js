@@ -60,6 +60,10 @@ class UserController {
 
             const user = await User.findByPk(id);
 
+            if (!user) {
+                throw notFound('User not found');
+            }
+
             res.json(user);
         } catch (e) {
             next(notFound('User is not found!'));
@@ -93,6 +97,12 @@ class UserController {
     async remove(req, res, next) {
         try {
             const { id } = req.params;
+
+            const user = await User.findByPk(id);
+
+            if (!user) {
+                throw notFound('User not found');
+            }
 
             await User.destroy({
                     where: { id: id }
