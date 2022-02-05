@@ -11,18 +11,21 @@ const UserList = observer(() => {
         const [userId, setUserId] = useState(null);
 
         const onEdit = (id) => {
-            console.log(id);
             setUserVisible(true);
             setUserId(id);
-
         }
-console.log(store.users);
+
+
         return (
             <Row>
                 {
-                    store.users &&
-                    store.users.map(user =>
-                        <UserItem key={user.id} user={user} onEdit={onEdit}/>
+                    // store.users &&
+                    store.users.map(user => {
+                        console.log(user)
+                            return (
+                                    <UserItem key={user.id} user={user} onEdit={onEdit}/>
+                                )
+                        }
                     )
                 }
 

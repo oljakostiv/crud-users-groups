@@ -1,11 +1,13 @@
 import {observer} from "mobx-react-lite";
 import React, {useContext, useEffect, useState} from "react";
+import {Button, Dropdown, Form, Modal} from "react-bootstrap";
+import { useToasts } from 'react-toast-notifications';
 import {Context} from "../../index";
 import {fetchOneUser, updateUser} from "../../http/userAPI";
-import {Button, Dropdown, Form, Modal} from "react-bootstrap";
 
 const EditUser = observer(({show, onHide, userId}) => {
     const {store} = useContext(Context);
+    const { addToast } = useToasts();
 
     const [name, setName] = useState('');
     const [file, setFile] = useState(null);
@@ -16,6 +18,9 @@ const EditUser = observer(({show, onHide, userId}) => {
             fetchOneUser(userId).then(data => {
                 setName(data.name);
                 setGroupId(data.groupId);
+            }).catch(e => {
+                onHide();
+                addToast(e.response.data.message, { appearance: 'error', autoDismiss: true });
             });
         }
     }, [userId]);

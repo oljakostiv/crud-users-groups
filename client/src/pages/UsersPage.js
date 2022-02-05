@@ -10,7 +10,6 @@ import Pages from "../components/Pages";
 
 const UsersPage = observer(() => {
     const {store} = useContext(Context);
-    // const message = useMessage();
     const [userVisible, setUserVisible] = useState(false);
     const [loading, setLoading] = useState(true);
 

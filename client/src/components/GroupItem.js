@@ -4,7 +4,7 @@ import {Button, Card, Col} from "react-bootstrap";
 const GroupItem = ({group}) => {
     return (
         <Col md={4} className='mt-4'>
-            <Card style={{width: 180, cursor: 'pointer', border: '3px solid lightgray'}}>
+            <Card style={{width: 180, minHeight: 200, cursor: 'pointer', border: '3px solid lightgray'}}>
 
                 <div className='mt-1 d-flex justify-content-center align-items-center flex-column'>
                     <div style={{fontSize: 20}}>{group.name}</div>
