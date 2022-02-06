@@ -3,13 +3,8 @@ const {
     userController:
         { create, getAll, getById, update, remove }
 } = require('../controllers');
-const {
-    checkMiddleware: {
-        checkUniqueName, checkFullInput
-    }
-} = require('../middlewares');
 
-routes.post('/', checkUniqueName, checkFullInput, create);
+routes.post('/', create);
 routes.get('/', getAll);
 routes.get('/:id', getById);
 routes.put('/:id', update);

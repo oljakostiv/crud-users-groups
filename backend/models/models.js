@@ -3,15 +3,15 @@ const sequelize = require('../db');
 
 const User = sequelize.define('user', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: STRING, unique: true },
+    name: { type: STRING},
     img: { type: STRING, allowNull: false }
 
 });
 
 const Group = sequelize.define('group', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-    name: { type: STRING, unique: true, allowNull: false },
-    description: { type: STRING, unique: true }
+    name: { type: STRING, allowNull: false },
+    description: { type: STRING }
 });
 
 Group.hasMany(User);

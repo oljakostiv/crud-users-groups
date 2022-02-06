@@ -1,5 +1,5 @@
 const {Group, User} = require('../models/models');
-const {errorHandler: {notFound, serverErr}} = require('../errors');
+const {errorHandler: {notFound, serverErr, badRequest}} = require('../errors');
 
 const defaultOrder = [["createdAt", "DESC"]];
 
@@ -7,6 +7,10 @@ class GroupController {
     async create(req, res, next) {
         try {
             const { name, description } = req.body;
+
+            if (!name) {
+                throw badRequest('Add group name.');
+            }
 
             const group = await Group.create({ name, description });
 

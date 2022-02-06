@@ -15,7 +15,7 @@ class UserController {
     async create(req, res, next) {
         try {
             const { name, groupId } = req.body;
-            const { img } = req.files;
+            const img = req.files && req.files.img;
 
             if (!name || !img) {
                 throw badRequest('Add your name and photo.');
