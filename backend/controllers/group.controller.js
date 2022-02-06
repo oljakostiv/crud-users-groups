@@ -1,4 +1,4 @@
-const {Group} = require('../models/models');
+const {Group, User} = require('../models/models');
 const {errorHandler: {notFound, serverErr}} = require('../errors');
 
 const defaultOrder = [["createdAt", "DESC"]];
@@ -13,7 +13,8 @@ class GroupController {
             res.json(group);
         } catch (e) {
             console.error(e);
-            next(serverErr(e.message));        }
+            next(serverErr(e.message));
+        }
     };
 
     async getAll(req, res, next) {
@@ -57,6 +58,11 @@ class GroupController {
         try {
             const { id } = req.params;
 
+           const usersCount = await User.count({ where: { groupId: id }});
+
+           if (usersCount > 0) {
+               throw serverErr('Please, remove users from the group to delete the group.');
+           }
             await Group.destroy({
                 where: { id: id }}
             );
