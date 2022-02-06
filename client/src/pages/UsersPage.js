@@ -22,7 +22,7 @@ const UsersPage = observer(() => {
         fetchGroups().then(data => {
             store.setGroups(data);
         }).finally(() => setLoading(false));
-    }, []);
+    }, [store]);
 
     useEffect(() => {
         fetchUsers(store.selectedGroup.id, store.page, 4)

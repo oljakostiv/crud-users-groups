@@ -16,7 +16,7 @@ const GroupsPage = observer(() => {
         fetchGroups().then(data => {
             store.setGroups(data);
         }).finally(() => setLoading(false));
-    }, []);
+    }, [store]);
 
     if (loading) {
         return <Spinner animation={"grow"}/>

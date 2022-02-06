@@ -17,7 +17,7 @@ const CreateUser = observer(({show, onHide}) => {
         fetchGroups().then(data => {
             store.setGroups(data)
         })
-    }, []);
+    }, [store]);
 
     const selectFile = e => {
         setFile(e.target.files[0]);
