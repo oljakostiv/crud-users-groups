@@ -1,6 +1,8 @@
 const {Group} = require('../models/models');
 const {errorHandler: {notFound, serverErr}} = require('../errors');
 
+const defaultOrder = [["createdAt", "DESC"]];
+
 class GroupController {
     async create(req, res, next) {
         try {
@@ -16,7 +18,7 @@ class GroupController {
 
     async getAll(req, res, next) {
         try {
-            const groups = await Group.findAll();
+            const groups = await Group.findAll({ order: defaultOrder });
             res.json(groups);
         } catch (e) {
             next(e);

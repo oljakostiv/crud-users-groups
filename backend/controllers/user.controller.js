@@ -7,7 +7,9 @@ const getImageName = async (img) => {
     const fileName = uuid + '.jpg';
     await img.mv(path.resolve(__dirname, '..', 'static', fileName));
     return fileName;
-}
+};
+
+const defaultOrder = [["createdAt", "DESC"]];
 
 class UserController {
     async create(req, res, next) {
@@ -41,11 +43,11 @@ class UserController {
             let users;
 
             if (!groupId) {
-                users = await User.findAndCountAll({limit, offset});
+                users = await User.findAndCountAll({ limit, offset, order: defaultOrder });
             }
 
             if (groupId) {
-                users = await User.findAndCountAll({where: { groupId }, limit, offset});
+                users = await User.findAndCountAll({ where: { groupId }, limit, offset, order: defaultOrder });
             }
 
             return res.json(users);
@@ -82,7 +84,7 @@ class UserController {
 
             const fileName = await getImageName(img);
 
-            await User.update({name, groupId, img: fileName},
+            await User.update({ name, groupId, img: fileName },
                 { where: { id: id }}
             );
 
