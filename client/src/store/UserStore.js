@@ -1,4 +1,5 @@
 import {makeAutoObservable} from "mobx";
+import {fetchGroups, fetchUsers} from "../http/userAPI";
 
 export default class UserStore {
     constructor() {
@@ -12,6 +13,19 @@ export default class UserStore {
         makeAutoObservable(this);
     };
 
+    refreshUsers = () => {
+        fetchUsers(null, this._page, this._limit).then(data => {
+            this.setUsers(data.rows);
+            this.setTotalCount(data.count);
+        });
+    };
+
+    refreshGroups = () => {
+        fetchGroups().then(data => {
+            this.setGroups(data);
+        });
+    };
+
     setUsers(users) {
         this._users = users;
     };
@@ -21,7 +35,7 @@ export default class UserStore {
     };
 
     setSelectedGroup(group) {
-        this.setPage(1);
+        this.setPage(this._page);
         this._selectedGroup = group;
     };
 

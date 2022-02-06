@@ -14,7 +14,6 @@ const GroupsPage = observer(() => {
 
     useEffect(() => {
         fetchGroups().then(data => {
-            store.setGroups(true);
             store.setGroups(data);
         }).finally(() => setLoading(false));
     }, []);

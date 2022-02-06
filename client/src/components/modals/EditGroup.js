@@ -1,25 +1,35 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {observer} from "mobx-react-lite";
 import {Button, Form, Modal} from "react-bootstrap";
 import {useToasts} from 'react-toast-notifications';
-import {createGroup} from "../../http/userAPI";
+import {fetchOneGroup, updateGroup} from "../../http/userAPI";
 import {Context} from "../../index";
 
-const CreateGroup = observer(({show, onHide}) => {
+const EditGroup = observer(({show, onHide, groupId}) => {
     const {store} = useContext(Context);
     const {addToast} = useToasts();
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
 
-    const addGroup = () => {
-        createGroup({name, description}).then(() => {
-            setName('');
-            setDescription('');
+    useEffect(() => {
+        if (groupId) {
+            fetchOneGroup(groupId).then(data => {
+                setName(data.name);
+                setDescription(data.description || '');
+            }).catch(e => {
+                onHide();
+                addToast(e.response.data.message, {appearance: 'error', autoDismiss: true});
+            });
+        }
+    }, [groupId]);
+
+    const saveGroup = () => {
+        updateGroup(groupId, {name, description}).then(() => {
             onHide();
-            addToast('Created Successfully', {appearance: 'success', autoDismiss: true});
+            addToast('Updated Successfully', {appearance: 'success', autoDismiss: true});
         }).catch(e => addToast(e.response.data.message, {appearance: 'error', autoDismiss: true}))
-            .finally(() => store.refreshGroups());
+        .finally(() => store.refreshGroups());
     };
 
     return (
@@ -31,7 +41,7 @@ const CreateGroup = observer(({show, onHide}) => {
         >
             <Modal.Header closeButton>
                 <Modal.Title id="contained-modal-title-vcenter">
-                    Add new group:
+                    Edit:
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -51,11 +61,11 @@ const CreateGroup = observer(({show, onHide}) => {
                 </Form>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant={"outline-success"} onClick={addGroup}>Add</Button>
+                <Button variant={"outline-success"} onClick={saveGroup}>Save</Button>
                 <Button variant={"outline-danger"} onClick={onHide}>Cancel</Button>
             </Modal.Footer>
         </Modal>
     );
 });
 
-export default CreateGroup;
+export default EditGroup;

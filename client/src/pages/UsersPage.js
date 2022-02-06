@@ -15,13 +15,11 @@ const UsersPage = observer(() => {
 
     useEffect(() => {
         fetchUsers(null, 1, 4).then(data => {
-            store.setUsers(true);
             store.setUsers(data.rows);
             store.setTotalCount(data.count);
         });
 
         fetchGroups().then(data => {
-            store.setGroups(true);
             store.setGroups(data);
         }).finally(() => setLoading(false));
     }, []);

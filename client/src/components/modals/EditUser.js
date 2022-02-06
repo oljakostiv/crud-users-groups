@@ -1,13 +1,13 @@
 import {observer} from "mobx-react-lite";
 import React, {useContext, useEffect, useState} from "react";
 import {Button, Dropdown, Form, Modal} from "react-bootstrap";
-import { useToasts } from 'react-toast-notifications';
+import {useToasts} from 'react-toast-notifications';
 import {Context} from "../../index";
 import {fetchOneUser, updateUser} from "../../http/userAPI";
 
 const EditUser = observer(({show, onHide, userId}) => {
     const {store} = useContext(Context);
-    const { addToast } = useToasts();
+    const {addToast} = useToasts();
 
     const [name, setName] = useState('');
     const [file, setFile] = useState(null);
@@ -20,7 +20,7 @@ const EditUser = observer(({show, onHide, userId}) => {
                 setGroupId(data.groupId);
             }).catch(e => {
                 onHide();
-                addToast(e.response.data.message, { appearance: 'error', autoDismiss: true });
+                addToast(e.response.data.message, {appearance: 'error', autoDismiss: true});
             });
         }
     }, [userId]);
@@ -36,7 +36,11 @@ const EditUser = observer(({show, onHide, userId}) => {
         formData.append('img', file);
         formData.append('groupId', groupId);
 
-        updateUser(userId, formData).then(() => onHide());
+        updateUser(userId, formData).then(() => {
+            onHide();
+            addToast('Updated Successfully', {appearance: 'success', autoDismiss: true});
+        }).catch(e => addToast(e.response.data.message, {appearance: 'error', autoDismiss: true}))
+        .finally(() => store.refreshUsers());
     };
 
     return (
