@@ -1,10 +1,10 @@
-const uuid = require('uuid').v4();
+const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const {User} = require('../models/models');
 const {errorHandler: {badRequest, notFound, serverErr}} = require('../errors');
 
 const getImageName = async (img) => {
-    const fileName = uuid + '.jpg';
+    const fileName = uuidv4() + '.jpg';
     await img.mv(path.resolve(__dirname, '..', 'static', fileName));
     return fileName;
 };
