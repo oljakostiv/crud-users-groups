@@ -14,9 +14,9 @@ but it has the following pieces:
 
 ## Screen:
 
-![](client/src/utils/images/screen1.png)
-![](client/src/utils/images/screen2.png)
-![](client/src/utils/images/screen3.png)
+![](client/src/utils/img/screen1.png)
+![](client/src/utils/img/screen2.png)
+![](client/src/utils/img/screen3.png)
 
 ## Quick-start instructions:
 
