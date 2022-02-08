@@ -8,7 +8,7 @@ but it has the following pieces:
 * CRUD functionality (for users and groups)
 * node/express backend for API calls
 * postgres database with minimal schema to demonstrate functionality
-* React/Redux frontend to demonstrate simple functionality
+* React/MobX frontend to demonstrate simple functionality
 * containerize with Docker
 * Instructions on how to set everything up
 
